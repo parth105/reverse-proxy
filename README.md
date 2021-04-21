@@ -19,3 +19,12 @@ Proxy intercepting connections to "/proxy":
 curl "http://127.0.0.1:8990/proxy"
 You've reached the proxy!
 ```
+
+### Teardown
+Just `ctrl+c`:
+```
+go run cmd/reverse-proxy/main.go
+Starting the http server..
+Starting the proxy server..
+^Csignal: interrupt
+```
