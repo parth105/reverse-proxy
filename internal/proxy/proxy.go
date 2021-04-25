@@ -16,8 +16,8 @@ type SimpleProxy struct {
 }
 
 type ProxyHandlers interface {
-	Handler(http.ResponseWriter, *http.Request)
-	ProxyHandler(http.ResponseWriter, http.Request)
+	handler(http.ResponseWriter, *http.Request)
+	proxyHandler(http.ResponseWriter, http.Request)
 }
 
 func NewSimpleProxy() *SimpleProxy {
@@ -28,7 +28,7 @@ func NewSimpleProxy() *SimpleProxy {
 	}
 }
 
-func (p *SimpleProxy) Handler(w http.ResponseWriter, r *http.Request) {
+func (p *SimpleProxy) handler(w http.ResponseWriter, r *http.Request) {
 	p.RevProxy.ServeHTTP(w, r)
 }
 
@@ -40,7 +40,7 @@ func getEnviron(env string, def string) string {
 	return value
 }
 
-func (p *SimpleProxy) ProxyHandler(w http.ResponseWriter, r *http.Request) {
+func (p *SimpleProxy) proxyHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "You've reached the proxy!\n")
 }
 
@@ -48,8 +48,8 @@ func StartProxy() {
 	proxyAddr := fmt.Sprintf(":%s", DefaultPort)
 	p := NewSimpleProxy()
 	proxyServer := http.NewServeMux()
-	proxyServer.HandleFunc("/", p.Handler)
-	proxyServer.HandleFunc("/proxy", p.ProxyHandler)
+	proxyServer.HandleFunc("/", p.handler)
+	proxyServer.HandleFunc("/proxy", p.proxyHandler)
 
 	http.ListenAndServe(proxyAddr, proxyServer)
 }
