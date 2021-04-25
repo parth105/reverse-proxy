@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/parth105/reverse-proxy/internal/httpserver"
-	"github.com/parth105/reverse-proxy/internal/proxy"
+	"github.com/parth105/reverse-proxy/pkg/httpserver"
+	"github.com/parth105/reverse-proxy/pkg/proxy"
 
 	"fmt"
 )
